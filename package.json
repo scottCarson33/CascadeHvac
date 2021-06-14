@@ -1,0 +1,24 @@
+{
+  "name": "cascadehvac",
+  "version": "1.0.0",
+  "description": "cascade exercise code\\",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottCarson33/CascadeHvac.git"
+  },
+  "author": "Scott Carson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottCarson33/CascadeHvac/issues"
+  },
+  "homepage": "https://github.com/scottCarson33/CascadeHvac#readme"
+}

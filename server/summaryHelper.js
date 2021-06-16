@@ -4,7 +4,7 @@ const moment  = require('moment')
 
 const summaryHelper = {
     
-    //gets the HVACData for when heating and air conditioning is turned on
+  //gets the HVACData for when heating and air conditioning is turned on
   getHVACData: async function getHVACData (startDate, endDate,  ACTemp, heatTemp, filePath) {
 
     let dailyData = await this.getDailyMinsAndMaxTemps(startDate, endDate, filePath)
@@ -20,19 +20,20 @@ const summaryHelper = {
     let totalACDays = 0;
 
     //loop through daily Temperature Data and find what days and how many times the heat/ac was turned on
+    // the keys hold the dates
     for ( key in dailyData){
       if (dailyData.hasOwnProperty(key)) {
         let heatingOn = false
-        let ACOn = false
+        let airConditioningOn = false
         if(dailyData[key].min < heatTemp){
           totalHeatingDays++;
           heatingOn = true
         }
         if(dailyData[key].max > ACTemp){
           totalACDays++;
-          ACOn = true
+          airConditioningOn = true
         }
-        HVACArray.push({date: key, heating: heatingOn, airConditioning: ACOn})
+        HVACArray.push({date: key, heating: heatingOn, airConditioning: airConditioningOn})
       }
   }
      

@@ -19,8 +19,7 @@ getHVACData(date) {
     fetch("http://localhost:9000/HVACData/monthlySummary/" + date)
         .then(res => res.json())
         .then(res => {
-          console.log(res) 
-        this.setState({ HVACData: res.HVACData})
+          this.setState({ HVACData: res.HVACData})
         }
         )
 }

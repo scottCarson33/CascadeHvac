@@ -3,14 +3,18 @@ const fs = require('fs');
 const moment  = require('moment')
 
 const summaryHelper = {
+    
     //gets the HVACData for when heating and air conditioning is turned on
+  getHVACData: async function getHVACData (startDate, endDate,  ACTemp, heatTemp, filePath) {
 
-getHVACData: async function getHVACData (startDate, endDate, filePath) {
-
-    const ACTemp = 75
-    const heatTemp = 62
-  
     let dailyData = await this.getDailyMinsAndMaxTemps(startDate, endDate, filePath)
+    
+    return this.createHVACSummaryObject(dailyData, ACTemp, heatTemp)
+  
+  },
+
+  createHVACSummaryObject: function createSummaryObject(dailyData, ACTemp, heatTemp){
+
     let HVACArray = []
     let totalHeatingDays = 0;
     let totalACDays = 0;
@@ -31,13 +35,14 @@ getHVACData: async function getHVACData (startDate, endDate, filePath) {
         HVACArray.push({date: key, heating: heatingOn, airConditioning: ACOn})
       }
   }
-  
-  return {HVACArray, totalHeatingDays, totalACDays}
-  
+     
+    return {HVACArray, totalHeatingDays, totalACDays}
+    
   },
+
+
   //gets the Min And Max Temperature for each day in a given time range
   getDailyMinsAndMaxTemps: async function getDailyMinsAndMaxTemps (startDate, endDate, filePath) {
-  
     let data = {}
     return new Promise(function(resolve, reject) {
       try{
@@ -50,11 +55,11 @@ getHVACData: async function getHVACData (startDate, endDate, filePath) {
             if(data[day] == null){
                 data[day] = {}
             }
-            if(data[day].min == null || data[day].min > row['Minimum Temperature']){
-                data[day].min = row['Minimum Temperature']
+            if(data[day].min == null || data[day].min > parseFloat(row['Minimum Temperature'])){
+                data[day].min = parseFloat(row['Minimum Temperature'])
             }
-            if(data[day].max == null || data[day].max < row['Maximum Temperature']){
-                data[day].max = row['Maximum Temperature']
+            if(data[day].max == null || data[day].max < parseFloat(row['Maximum Temperature'])){
+                data[day].max = parseFloat(row['Maximum Temperature'])
             }
   
         }

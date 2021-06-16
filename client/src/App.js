@@ -7,7 +7,11 @@ class App extends Component {
 
 constructor(props) {
     super(props);
-    this.state = { apiResponse: [] };
+    this.state = { HVACData: {
+      HVACArray: [],
+      totalHeatingDays: 0,
+      totalACDays: 0
+    } };
 }
 
 
@@ -16,22 +20,21 @@ getHVACData(date) {
         .then(res => res.json())
         .then(res => {
           console.log(res) 
-        this.setState({ apiResponse: res.HVACData})
+        this.setState({ HVACData: res.HVACData})
         }
         )
 }
 
 componentWillMount() {
-    this.getHVACData("06-01-2020");
+    this.getHVACData("07-2020");
 }
   render () {
     return(
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {/* {this.state.apiResponse} */}
-        </p>
+        <h3> HVAC Summary Results </h3>
+        <p>Total Heating Days: {this.state.HVACData.totalHeatingDays} || Total Air Conditioning Days: {this.state.HVACData.totalACDays}</p>
         <table>
   <thead>
     <tr>
@@ -41,7 +44,7 @@ componentWillMount() {
     </tr>
   </thead>
   <tbody>
-    {this.state.apiResponse.map(item => {
+    {this.state.HVACData.HVACArray.map(item => {
       return (
         <tr key={item.date}>
           <td>{ item.date }</td>
@@ -52,14 +55,6 @@ componentWillMount() {
     })}
   </tbody>
 </table>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
     );
